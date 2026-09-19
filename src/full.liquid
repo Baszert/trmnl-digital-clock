@@ -1,8 +1,8 @@
-<div class="layout layout--col gap--xlarge rounded {{ color_mode }}
+<div class="layout layout--col gap--xlarge {{ color_mode }}
   {% if color_mode == 'light' %}
   text--black
   {% else %}
-  text--white bg--black
+  bg--black
   {% endif %}
   ">
 
@@ -11,14 +11,17 @@
     {% assign date_string_lower = date_string | downcase %}
     {% assign date_chars = date_string_lower | split: "" %}
     {% for char in date_chars %}
-    <div class="date-char" data-char="{{ char }}"></div>
+    <div class="date-char lg:hidden" data-char="{{ char }}"></div>
+    <div class="date-char date-char--large md:hidden lg:block" data-char="{{ char }}"></div>
     {% endfor %}
   </div>
 
   <div class="time-display flex gap--xsmall flex--center-x">
-    <div class="time-digit" data-char="{{ hours | slice: 0, 1 }}"></div>
-    <div class="time-digit" data-char="{{ hours | slice: 1, 1 }}"></div>
-    <!-- Colon -->
+    <div class="time-digit time-digit--large md:hidden lg:block" data-char="{{ hours | slice: 0, 1 }}"></div>
+    <div class="time-digit time-digit--large md:hidden lg:block" data-char="{{ hours | slice: 1, 1 }}"></div>
+    <div class="time-digit lg:hidden" data-char="{{ hours | slice: 0, 1 }}"></div>
+    <div class="time-digit lg:hidden" data-char="{{ hours | slice: 1, 1 }}"></div>
+<!-- Colon -->
     <div class="colon flex flex--col flex--center-y gap--xlarge">
       <div class="colon-dot w--4 h--4 mx--2 rounded
         {% if color_mode == 'light' %}
@@ -36,14 +39,17 @@
         "></div>
     </div>
     <!-- End colon -->
-    <div class="time-digit" data-char="{{ minutes | slice: 0, 1 }}"></div>
-    <div class="time-digit" data-char="{{ minutes | slice: 1, 1 }}"></div>
+    <div class="time-digit time-digit--large md:hidden lg:block" data-char="{{ minutes | slice: 0, 1 }}"></div>
+    <div class="time-digit time-digit--large md:hidden lg:block" data-char="{{ minutes | slice: 1, 1 }}"></div>
+    <div class="time-digit lg:hidden" data-char="{{ minutes | slice: 0, 1 }}"></div>
+    <div class="time-digit lg:hidden" data-char="{{ minutes | slice: 1, 1 }}"></div>
 
     {% if time_format == "12h" %}
     <div class="am-pm-display flex  gap--xsmall ml--2">
       {% assign am_pm_chars = am_pm | split: "" %}
       {% for char in am_pm_chars %}
-      <div class="am-pm-char" data-char="{{ char }}"></div>
+      <div class="am-pm-char lg:hidden" data-char="{{ char }}"></div>
+      <div class="am-pm-char am-pm-char--large md:hidden lg:block" data-char="{{ char }}"></div>
       {% endfor %}
     </div>
     {% endif %}
@@ -54,7 +60,8 @@
   {% assign location_chars = location_lower | split: "" %}
   <div class="flex gap--xsmall">
     {% for char in location_chars %}
-    <div class="date-char" data-char="{{ char }}"></div>
+    <div class="date-char lg:hidden" data-char="{{ char }}"></div>
+    <div class="date-char date-char--large md:hidden lg:block" data-char="{{ char }}"></div>
     {% endfor %}
   </div>
   {% endif %}
@@ -67,13 +74,28 @@
     el.innerHTML = renderDigit(char, 100);
   });
 
+    document.querySelectorAll('.time-digit--large').forEach(el => {
+    const char = el.getAttribute('data-char');
+    el.innerHTML = renderDigit(char, 150);
+  });
+
   document.querySelectorAll('.date-char').forEach(el => {
     const char = el.getAttribute('data-char');
     el.innerHTML = renderDigit(char, 25);
   });
 
+    document.querySelectorAll('.date-char--large').forEach(el => {
+    const char = el.getAttribute('data-char');
+    el.innerHTML = renderDigit(char, 50);
+  });
+
   document.querySelectorAll('.am-pm-char').forEach(el => {
     const char = el.getAttribute('data-char');
     el.innerHTML = renderDigit(char, 15);
+  });
+
+    document.querySelectorAll('.am-pm-char--large').forEach(el => {
+    const char = el.getAttribute('data-char');
+    el.innerHTML = renderDigit(char, 25);
   });
 </script>
