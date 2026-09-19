@@ -74,23 +74,15 @@
   }
 </script>
 
-{% assign utc_offset_seconds = trmnl.user.utc_offset | default: 0 %}
-{% assign utc_offset_hours = utc_offset_seconds | divided_by: 3600 %}
 {% assign color_mode = trmnl.plugin_settings.custom_fields_values.color_mode | default: "dark" %}
 
-{% assign hours_utc = "now" | date: "%H" | plus: 0 %}
-{% assign minutes = "now" | date: "%M" %}
-{% assign day = "now" | date: "%d" %}
-{% assign month = "now" | date: "%b" | upcase %}
-{% assign year = "now" | date: "%Y" %}
-
-{% assign hours_local = hours_utc | plus: utc_offset_hours %}
-
-{% if hours_local < 0 %}
-  {% assign hours_local = hours_local | plus: 24 %}
-{% elsif hours_local >= 24 %}
-  {% assign hours_local = hours_local | minus: 24 %}
-{% endif %}
+{% comment %} Local time incl. half-hour offsets; date follows the local day too {% endcomment %}
+{% assign local_ts = trmnl.system.timestamp_utc | plus: trmnl.user.utc_offset %}
+{% assign hours_local = local_ts | date: "%H" | plus: 0 %}
+{% assign minutes = local_ts | date: "%M" %}
+{% assign day = local_ts | date: "%d" %}
+{% assign month = local_ts | date: "%b" | upcase %}
+{% assign year = local_ts | date: "%Y" %}
 
 {% if hours_local < 10 %}
   {% assign hours = "0" | append: hours_local %}
