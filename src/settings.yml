@@ -37,7 +37,7 @@ custom_fields:
   description: Get the feeling of a 80's/90's digital clock, enter your location (optional), select your time format and what theme you would want. And you get a clock that is not even on time, everytime.
   category: calendar
   email_address: trmnl@achtnegen.nl
-  github_url: https://github.com/Bastronautik/trmnl-digital-clock
+  github_url: https://github.com/Baszert/trmnl-digital-clock
 - keyname: location
   name: Location
   field_type: string
