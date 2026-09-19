@@ -132,19 +132,20 @@
 
 
 <style>
-  .dark .number-on {
+  /* Scoped to .dc-plugin (dark/light sits on the root) so these don't leak into other plugins in a mashup */
+  .dc-plugin.dark .number-on {
     fill: #FFFFFF;
   }
   
-  .dark .number-off {
+  .dc-plugin.dark .number-off {
     fill: #232323;
   }
 
-  .light .number-on {
+  .dc-plugin.light .number-on {
     fill: #000000;
   }
   
-  .light .number-off {
+  .dc-plugin.light .number-off {
     fill: #D9D9D9;
   }
 </style>
